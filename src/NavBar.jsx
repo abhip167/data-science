@@ -111,7 +111,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -121,6 +121,14 @@ const ResponsiveAppBar = () => {
                 {page}
               </Button>
             ))}
+          </Box> */}
+          <Box
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            justifyContent="flex-end"
+          >
+            <Button sx={{ my: 2, display: "block" }} variant="contained">
+              Back
+            </Button>
           </Box>
 
           {/* <Box sx={{ flexGrow: 0 }}>
