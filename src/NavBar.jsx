@@ -36,6 +36,11 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const goBack = (e) => {
+    e.preventDefault();
+    window.history.back();
+  };
+
   return (
     <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
@@ -126,7 +131,11 @@ const ResponsiveAppBar = () => {
             sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
             justifyContent="flex-end"
           >
-            <Button sx={{ my: 2, display: "block" }} variant="contained">
+            <Button
+              sx={{ my: 2, display: "block" }}
+              variant="contained"
+              onClick={goBack}
+            >
               Back
             </Button>
           </Box>
