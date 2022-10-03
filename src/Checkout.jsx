@@ -15,6 +15,7 @@ import FileUploadForm from "./FileUploadForm.jsx";
 import UserAddress from "./UserAddress.jsx";
 import DataDescription from "./DataDescription.jsx";
 import Navbar from "./NavBar.jsx";
+
 const steps = [
   "User Details",
   "Contact Information",
@@ -22,24 +23,24 @@ const steps = [
   "Files Upload",
 ];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <UserDetailsForm />;
-    case 1:
-      return <UserAddress />;
-    case 2:
-      return <DataDescription />;
-    case 3:
-      return <FileUploadForm />;
-
-    default:
-      throw new Error("Unknown step");
-  }
-}
+const defaultValues = {
+  name: "",
+  email: "",
+  phone: 0,
+  address: "",
+  city: "",
+  province: "",
+  postalCode: "",
+  country: "",
+  description: "",
+  natureOfWork: "",
+  files: {},
+};
 
 export default () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formData, setFormdata] = useState(defaultValues);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -47,6 +48,56 @@ export default () => {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const submitForm = () => {
+    setIsLoading(true);
+
+    setTimeout(() => setIsLoading(false), 2000);
+  };
+  const handleSubmit = (data) => {
+    setFormdata((oldFormData) => ({ ...oldFormData, ...data }));
+    if (activeStep === steps.length - 1) {
+      submitForm();
+    } else {
+      handleNext();
+    }
+  };
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <UserDetailsForm
+            handleBack={handleBack}
+            onSubmit={handleSubmit}
+            defaultValues={formData}
+          />
+        );
+      case 1:
+        return (
+          <UserAddress
+            handleBack={handleBack}
+            onSubmit={handleSubmit}
+            defaultValues={formData}
+          />
+        );
+      case 2:
+        return (
+          <DataDescription
+            handleBack={handleBack}
+            onSubmit={handleSubmit}
+            defaultValues={formData}
+          />
+        );
+      case 3:
+        return (
+          <FileUploadForm handleBack={handleBack} onSubmit={handleSubmit} />
+        );
+
+      default:
+        throw new Error("Unknown step");
+    }
   };
 
   return (
@@ -84,24 +135,7 @@ export default () => {
               </Typography>
             </Fragment>
           ) : (
-            <Fragment>
-              {getStepContent(activeStep)}
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </Box>
-            </Fragment>
+            <Fragment>{getStepContent(activeStep)}</Fragment>
           )}
         </Paper>
         {/* <Copyright /> */}

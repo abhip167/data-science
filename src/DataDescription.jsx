@@ -1,44 +1,81 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import { Fragment } from "react";
+import { Grid, Box, Button, Typography, TextField } from "@mui/material";
 
-export default () => {
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    description: yup.string().required("Data description is required").max(120),
+    natureOfWork: yup.string().required("Nature of Work is required").max(120),
+  })
+  .required();
+
+export default ({ handleBack, onSubmit, defaultValues }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid, isDirty },
+  } = useForm({
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography variant="h6" gutterBottom>
         Data description
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Nature of work"
-            placeholder="Tell us more about your organization or your work"
-            autoComplete="shipping address-line1"
-            variant="standard"
-            fullWidth
-            multiline
-            maxRows={4}
+          <Controller
+            name="natureOfWork"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                error={!!errors.natureOfWork}
+                label="Nature of Work"
+                fullWidth
+                autoComplete="work-type"
+                variant="standard"
+                multiline
+                rows={2}
+                helperText={errors.natureOfWork?.message}
+                {...field}
+              />
+            )}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Data description"
-            placeholder="Write about nature of data, history, data source, etc."
-            autoComplete="shipping address-line1"
-            variant="standard"
-            fullWidth
-            multiline
-            maxRows={4}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                error={!!errors.description}
+                label="Description about data"
+                fullWidth
+                autoComplete="description"
+                variant="standard"
+                multiline
+                rows={4}
+                helperText={errors.description?.message}
+                {...field}
+              />
+            )}
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+          Back
+        </Button>
+        <Box sx={{ flex: "1 1 auto" }} />
+
+        <Button onClick={handleSubmit(onSubmit)}>Next</Button>
+      </Box>
+    </Fragment>
   );
 };
