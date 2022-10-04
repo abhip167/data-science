@@ -23,6 +23,7 @@ export default ({ handleBack, onSubmit }) => {
         files={files}
         setFiles={setFiles}
       />
+
       {error && (
         <Typography variant="subtitle1" color="error" mt={2}>
           Please upload alteast one data file.

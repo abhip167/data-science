@@ -8,6 +8,7 @@ import {
   Paper,
   Step,
   StepLabel,
+  CircularProgress,
 } from "@mui/material";
 
 import UserDetailsForm from "./UserDetailsForm.jsx";
@@ -26,7 +27,7 @@ const steps = [
 const defaultValues = {
   name: "",
   email: "",
-  phone: 0,
+  phone: undefined,
   address: "",
   city: "",
   province: "",
@@ -51,9 +52,12 @@ export default () => {
   };
 
   const submitForm = () => {
+    handleNext();
     setIsLoading(true);
 
-    setTimeout(() => setIsLoading(false), 2000);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   };
   const handleSubmit = (data) => {
     setFormdata((oldFormData) => ({ ...oldFormData, ...data }));
@@ -124,16 +128,20 @@ export default () => {
             ))}
           </Stepper>
           {activeStep === steps.length ? (
-            <Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-            </Fragment>
+            isLoading ? (
+              <Box sx={{ display: "flex" }} justifyContent="center">
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you so much.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Your oata will help us shaping the next future generation.
+                </Typography>
+              </Fragment>
+            )
           ) : (
             <Fragment>{getStepContent(activeStep)}</Fragment>
           )}

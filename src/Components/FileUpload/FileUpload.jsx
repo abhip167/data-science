@@ -69,7 +69,7 @@ const FileUpload = ({
   return (
     <>
       <Box>
-        <List dense ali>
+        <List dense>
           {Object.keys(files).map((fileName, index) => (
             <ListItem
               key={index}

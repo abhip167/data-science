@@ -10,7 +10,7 @@ const schema = yup
     name: yup.string().required("Organization/Individual name is required"),
     email: yup.string().email().required(),
     phone: yup
-      .number()
+      .number("Please enter correct phone number")
       .min(10, "Please enter correct phone number")
       .required("Phone number is required"),
   })
