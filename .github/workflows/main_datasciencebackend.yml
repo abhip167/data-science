@@ -3,6 +3,10 @@
 
 name: Build and deploy Node.js app to Azure Web App - DataScienceBackend
 
+defaults:
+  run:
+    working-directory: ./api
+    
 on:
   push:
     branches:
