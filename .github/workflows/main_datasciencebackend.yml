@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Using a sub-directory
-        uses: abhip167/data-science/api@main
-
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
@@ -29,12 +26,13 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+        working_directory: ./api
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: ./api
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,4 +54,4 @@ jobs:
           app-name: "DataScienceBackend"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CEB31279AE6949A1981CB4A4749D603F }}
-          package: .
+          package: ./api
