@@ -11,28 +11,42 @@ on:
 
 jobs:
   build:
+    name: Build Nodejs project
     runs-on: windows-latest
+    defaults:
+      run:
+        # Mobile folder working directory.
+        working-directory: api
 
     steps:
       - uses: actions/checkout@v2
 
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'api/**'
+
       - name: Set up Node.js version
+        if: steps.filter.outputs.api == 'true'
         uses: actions/setup-node@v1
         with:
           node-version: "18.x"
 
       - name: npm install, build, and test
+        if: steps.filter.outputs.api == 'true'
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-        working_directory: ./api
 
       - name: Upload artifact for deployment job
+        if: steps.filter.outputs.api == 'true'
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./api
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,18 +54,31 @@ jobs:
     environment:
       name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    defaults:
+      run:
+        # Mobile folder working directory.
+        working-directory: api
 
     steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'api/**'
+
       - name: Download artifact from build job
+        if: steps.filter.outputs.api == 'true'
         uses: actions/download-artifact@v2
         with:
           name: node-app
 
       - name: "Deploy to Azure Web App"
+        if: steps.filter.outputs.api == 'true'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: "DataScienceBackend"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CEB31279AE6949A1981CB4A4749D603F }}
-          package: ./api
+          package: .
