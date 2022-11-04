@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, Fragment } from "react";
 import {
   Button,
   List,
@@ -7,12 +7,14 @@ import {
   ListItemText,
   IconButton,
   Box,
+  TextField,
 } from "@mui/material";
 import {
   FileUpload as FileUploadIcon,
-  Assignment,
+  FilePresent,
   Delete,
 } from "@mui/icons-material";
+import { Divider } from "@mui/material";
 
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
 const KILO_BYTES_PER_BYTE = 1000;
@@ -75,17 +77,24 @@ const FileUpload = ({
               key={index}
               secondaryAction={
                 <IconButton edge="end" aria-label="delete">
-                  <Delete />
+                  <Delete color="primary" />
                 </IconButton>
               }
             >
-              <ListItemIcon>
-                <Assignment />
-              </ListItemIcon>
-              <ListItemText
-                primary={fileName}
-                secondary={`${convertBytesToKB(files[fileName].size)} kb`}
-              />
+              <>
+                <ListItemIcon>
+                  <FilePresent />
+                </ListItemIcon>
+                <ListItemText
+                  primary={fileName}
+                  secondary={
+                    <Fragment>
+                      {convertBytesToKB(files[fileName].size)} kb
+                    </Fragment>
+                  }
+                />
+                <TextField></TextField>
+              </>
             </ListItem>
           ))}
         </List>

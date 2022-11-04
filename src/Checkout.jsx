@@ -17,29 +17,19 @@ import UserAddress from "./UserAddress.jsx";
 import DataDescription from "./DataDescription.jsx";
 import Navbar from "./NavBar.jsx";
 
-const steps = [
-  "User Details",
-  "Contact Information",
-  "Data Description",
-  "Files Upload",
-];
+const steps = ["User Details", "Data Description", "Files Upload"];
 
 const defaultValues = {
   name: "",
   email: "",
   phone: undefined,
-  address: "",
-  city: "",
-  province: "",
-  postalCode: "",
-  country: "",
   description: "",
   natureOfWork: "",
   files: {},
 };
 
 export default () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const [formData, setFormdata] = useState(defaultValues);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,15 +68,8 @@ export default () => {
             defaultValues={formData}
           />
         );
+
       case 1:
-        return (
-          <UserAddress
-            handleBack={handleBack}
-            onSubmit={handleSubmit}
-            defaultValues={formData}
-          />
-        );
-      case 2:
         return (
           <DataDescription
             handleBack={handleBack}
@@ -94,7 +77,7 @@ export default () => {
             defaultValues={formData}
           />
         );
-      case 3:
+      case 2:
         return (
           <FileUploadForm handleBack={handleBack} onSubmit={handleSubmit} />
         );
