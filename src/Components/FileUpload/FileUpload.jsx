@@ -39,7 +39,9 @@ const FileUpload = ({
     for (let file of filesObject) {
       if (file.size >= maxFileSizeInBytes) {
         alert(
-          `File - ${file.name} is too large. Maximum allowed file size is ${maxFileSizeInBytes}`
+          `File - ${file.name} is too large. Maximum allowed file size is ${
+            maxFileSizeInBytes / 1000000
+          } Mb`
         );
 
         continue;

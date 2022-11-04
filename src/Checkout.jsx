@@ -29,7 +29,7 @@ const defaultValues = {
 };
 
 export default () => {
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormdata] = useState(defaultValues);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -121,7 +121,7 @@ export default () => {
                   Thank you so much.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your oata will help us shaping the next future generation.
+                  Your data will help us shaping the next future generation.
                 </Typography>
               </Fragment>
             )
