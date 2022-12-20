@@ -12,25 +12,21 @@ import {
 } from "@mui/material";
 
 import UserDetailsForm from "./UserDetailsForm.jsx";
-import FileUploadForm from "./FileUploadForm.jsx";
-import UserAddress from "./UserAddress.jsx";
 import DataDescription from "./DataDescription.jsx";
-import Navbar from "./NavBar.jsx";
 
-const steps = ["User Details", "Data Description", "Files Upload"];
+const steps = ["User Details", "Data Description"];
 
 const defaultValues = {
   name: "",
   email: "",
-  phone: undefined,
-  description: "",
-  natureOfWork: "",
+  phone: null,
+  description: null,
+  natureOfWork: null,
   files: {},
 };
 
 export default () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormdata] = useState(defaultValues);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNext = () => {
@@ -41,16 +37,44 @@ export default () => {
     setActiveStep(activeStep - 1);
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     handleNext();
     setIsLoading(true);
+
+    console.log({ defaultValues });
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(defaultValues),
+    };
+    const response = await fetch(
+      "http://localhost:3000/details",
+      requestOptions
+    );
+    const data = await response.json();
+    console.log({ data });
 
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
   };
+
   const handleSubmit = (data) => {
-    setFormdata((oldFormData) => ({ ...oldFormData, ...data }));
+    switch (activeStep) {
+      case 0:
+        defaultValues.name = data.name;
+        defaultValues.email = data.email;
+        defaultValues.phone = data.phone;
+        break;
+      case 1:
+        defaultValues.natureOfWork = data.natureOfWork;
+        defaultValues.description = data.description;
+        break;
+    }
+
+    console.log({ defaultValues });
+    console.log({ data });
+
     if (activeStep === steps.length - 1) {
       submitForm();
     } else {
@@ -65,7 +89,7 @@ export default () => {
           <UserDetailsForm
             handleBack={handleBack}
             onSubmit={handleSubmit}
-            defaultValues={formData}
+            defaultValues={defaultValues}
           />
         );
 
@@ -74,13 +98,13 @@ export default () => {
           <DataDescription
             handleBack={handleBack}
             onSubmit={handleSubmit}
-            defaultValues={formData}
+            defaultValues={defaultValues}
           />
         );
-      case 2:
-        return (
-          <FileUploadForm handleBack={handleBack} onSubmit={handleSubmit} />
-        );
+      // case 2:
+      //   return (
+      //     <FileUploadForm handleBack={handleBack} onSubmit={handleSubmit} />
+      //   );
 
       default:
         throw new Error("Unknown step");
@@ -118,11 +142,16 @@ export default () => {
             ) : (
               <Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you so much.
+                  We appreciate your contribution.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your data will help us shaping the next future generation.
+                  Please allow us for <b>1-2 days</b> to reach out to you. You
+                  will receive an email to upload your files. We are looking for
+                  more data for our students. Please spread the word for us in
+                  your network. Thank you.
                 </Typography>
+
+                <Typography variant="subtitle1"></Typography>
               </Fragment>
             )
           ) : (

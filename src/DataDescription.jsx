@@ -8,8 +8,11 @@ import * as yup from "yup";
 
 const schema = yup
   .object({
-    description: yup.string().required("Data description is required").max(120),
-    natureOfWork: yup.string().required("Nature of Work is required").max(120),
+    description: yup
+      .string()
+      .required("Data description is required")
+      .max(1200),
+    natureOfWork: yup.string().required("Nature of Work is required").max(1200),
   })
   .required();
 
