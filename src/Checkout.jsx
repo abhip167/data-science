@@ -14,10 +14,11 @@ import {
 import UserDetailsForm from "./UserDetailsForm.jsx";
 import DataDescription from "./DataDescription.jsx";
 
-const steps = ["User Details", "Data Description"];
+const steps = ["User Details", "Project & Data Description"];
 
 const defaultValues = {
   name: "",
+  organization: "",
   email: "",
   phone: null,
   description: null,
@@ -65,6 +66,7 @@ export default () => {
         defaultValues.name = data.name;
         defaultValues.email = data.email;
         defaultValues.phone = data.phone;
+        defaultValues.organization = data.organization;
         break;
       case 1:
         defaultValues.natureOfWork = data.natureOfWork;
@@ -118,16 +120,12 @@ export default () => {
           Submit Data
         </Typography>
       </Box>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
-          <Stepper
-            activeStep={activeStep}
-            sx={{ pt: 3, pb: 5 }}
-            alternativeLabel
-          >
+          <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map((label) => (
               <Step key={label} color="red">
                 <StepLabel>{label}</StepLabel>

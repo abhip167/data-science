@@ -8,6 +8,7 @@ import * as yup from "yup";
 const schema = yup
   .object({
     name: yup.string().required("Organization/Individual name is required"),
+    organization: yup.string().required("Organization name is required"),
     email: yup.string().email().required(),
     phone: yup
       .number("Please enter correct phone number")
@@ -39,11 +40,28 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.name}
-                label="Organization/Individual name"
+                label="Name"
                 fullWidth
                 autoComplete="name"
                 variant="standard"
                 helperText={errors.name?.message}
+                {...field}
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Controller
+            name="organization"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                error={!!errors.organization}
+                label="Organization"
+                fullWidth
+                autoComplete="organization"
+                variant="standard"
+                helperText={errors.organization?.message}
                 {...field}
               />
             )}

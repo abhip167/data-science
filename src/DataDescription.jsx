@@ -28,7 +28,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
 
   return (
     <Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" align="center" gutterBottom>
         Data description
       </Typography>
       <Grid container spacing={3}>
@@ -44,7 +44,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
                 autoComplete="work-type"
                 variant="standard"
                 multiline
-                rows={2}
+                rows={5}
                 helperText={errors.natureOfWork?.message}
                 {...field}
               />
@@ -63,7 +63,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
                 autoComplete="description"
                 variant="standard"
                 multiline
-                rows={4}
+                rows={5}
                 helperText={errors.description?.message}
                 {...field}
               />

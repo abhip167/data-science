@@ -11,15 +11,29 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import {
+  Home,
+  AccountCircle,
+  ExitToApp,
+  Description,
+  MarkEmailRead,
+} from "@mui/icons-material";
 import Logo from "./assets/carleton-logo-he.jpg";
 
+import { useNavigate, NavLink } from "react-router-dom";
+
+import { useRecoilState } from "recoil";
+import userState from "./State/userAtom.js";
+
 const pages = ["Cause", "Data Privacy", "About Us"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [user, setUser] = useRecoilState(userState);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,7 +52,14 @@ const ResponsiveAppBar = () => {
 
   const goBack = (e) => {
     e.preventDefault();
-    window.history.back();
+    navigate("/");
+  };
+
+  const logout = (e) => {
+    e.preventDefault();
+    setUser({ ...user, isAuthenticated: false, token: null });
+
+    navigate("/login");
   };
 
   return (
@@ -55,25 +76,6 @@ const ResponsiveAppBar = () => {
             ></img>
           </Box>
 
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            DATA SCIENCE PORTAL
-          </Typography> */}
           <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
             <img
               src={Logo}
@@ -116,27 +118,62 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box> */}
+
           <Box
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: 4 }}
             justifyContent="flex-end"
           >
+            {user.token && (
+              <NavLink
+                to="admin"
+                exact
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        backgroundColor: "#ffe6e5",
+                        textDecoration: "none",
+                      }
+                    : {
+                        textDecoration: "none",
+                      }
+                }
+              >
+                <Button variant="outlined" startIcon={<MarkEmailRead />}>
+                  Recepients
+                </Button>
+              </NavLink>
+            )}
+
+            {user.token && (
+              <NavLink
+                to="user-data"
+                exact
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        backgroundColor: "#ffe6e5",
+                        textDecoration: "none",
+                      }
+                    : {
+                        textDecoration: "none",
+                      }
+                }
+              >
+                <Button variant="outlined" startIcon={<Description />}>
+                  User Data
+                </Button>
+              </NavLink>
+            )}
+
+            <Button variant="outlined" onClick={goBack} startIcon={<Home />}>
+              Home
+            </Button>
             <Button
-              sx={{ my: 2, display: "block" }}
               variant="contained"
-              onClick={goBack}
+              onClick={logout}
+              startIcon={user.token ? <ExitToApp /> : <AccountCircle />}
             >
-              Back
+              {user.token ? "Logout" : "Login"}
             </Button>
           </Box>
 
