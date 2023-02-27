@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import userState from "../State/userAtom.js";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://datasciencebackend.azurewebsites.net/",
   headers: {
     "Content-Type": "application/json",
   },
