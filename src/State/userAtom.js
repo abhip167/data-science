@@ -11,6 +11,7 @@ const userAtom = atom({
     last_name: userToken?.last_name || "",
     email: userToken?.email || "",
     token: userToken?.token || "",
+    tokenDetails: userToken?.tokenDetails || "",
   },
 });
 

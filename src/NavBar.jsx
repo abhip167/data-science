@@ -57,8 +57,8 @@ const ResponsiveAppBar = () => {
 
   const logout = (e) => {
     e.preventDefault();
+    localStorage.removeItem("user");
     setUser({ ...user, isAuthenticated: false, token: null });
-
     navigate("/login");
   };
 
@@ -126,7 +126,7 @@ const ResponsiveAppBar = () => {
             {user.token && (
               <NavLink
                 to="admin"
-                exact
+                exact="true"
                 style={({ isActive }) =>
                   isActive
                     ? {
@@ -147,7 +147,7 @@ const ResponsiveAppBar = () => {
             {user.token && (
               <NavLink
                 to="user-data"
-                exact
+                exact="true"
                 style={({ isActive }) =>
                   isActive
                     ? {

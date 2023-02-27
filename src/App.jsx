@@ -23,9 +23,9 @@ const theme = createTheme({
 
 function App() {
   return (
-    <AxiosInterceptor>
+    <React.StrictMode>
       <RecoilRoot>
-        <React.StrictMode>
+        <AxiosInterceptor>
           <ThemeProvider theme={theme}>
             <Navbar />
 
@@ -51,9 +51,9 @@ function App() {
               ></Route>
             </Routes>
           </ThemeProvider>
-        </React.StrictMode>
+        </AxiosInterceptor>
       </RecoilRoot>
-    </AxiosInterceptor>
+    </React.StrictMode>
   );
 }
 

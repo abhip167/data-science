@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import userState from "../State/userAtom.js";
@@ -58,12 +59,15 @@ export default function SignIn() {
 
       localStorage.setItem("user", JSON.stringify(response.data));
 
+      const tokenDetails = jwtDecode(token);
+
       setUser({
         isAutehnticated: true,
         first_name,
         last_name,
         email,
         token,
+        tokenDetails,
       });
 
       navigate("/admin");
@@ -109,10 +113,10 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth

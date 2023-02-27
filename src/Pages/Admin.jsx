@@ -46,8 +46,8 @@ const styles = {
 const schema = yup
   .object({
     email: yup.string().required("Receipient email is required"),
-    first_name: yup.string().required("First name is required"),
-    last_name: yup.string().required("Last name is required"),
+    first_name: yup.string().required("First name is required").max(50),
+    last_name: yup.string().required("Last name is required").max(50),
   })
   .required();
 
@@ -66,10 +66,13 @@ export default () => {
   });
 
   const fetchRecepients = async () => {
-    const response = await Axios.get("recepients");
-
-    console.log(response);
-    setRecepients(response.data.rows);
+    try {
+      const response = await Axios.get("recepients");
+      console.log(response);
+      setRecepients(response.data.rows);
+    } catch (error) {
+      alert("Error fetching recepients");
+    }
   };
 
   React.useEffect(() => {
@@ -82,37 +85,32 @@ export default () => {
 
   const addNewRecepients = async (data) => {
     console.log(data);
-    const response = await fetch("http://localhost:3000/recepients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": localStorage.getItem("user"),
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await Axios.post("recepients", JSON.stringify(data));
+      const result = response.data;
 
-    const result = await response.json();
-    console.log(result);
+      console.log(result);
 
-    if (result?.error) {
+      if (result?.error) {
+        setMessage(ERROR_MESSAGE);
+        setOpen(true);
+        return;
+      }
+
+      setMessage(SUCCESS_MESSAGE);
+      setOpen(true);
+      fetchRecepients();
+    } catch (error) {
       setMessage(ERROR_MESSAGE);
       setOpen(true);
       return;
     }
-    setMessage(SUCCESS_MESSAGE);
-    setOpen(true);
-    fetchRecepients();
   };
 
   const deleteRecepient = async (id) => {
-    const response = await fetch(`http://localhost:3000/recepients/${id}`, {
-      method: "DELETE",
-      headers: {
-        "x-access-token": localStorage.getItem("user"),
-      },
-    });
+    const response = await Axios.delete(`recepients/${id}`);
 
-    const result = await response.json();
+    const result = await response.data;
     console.log(result);
     fetchRecepients();
     setMessage(DELETE_MESSAGE);
@@ -120,7 +118,7 @@ export default () => {
   };
   return (
     <Grid spacing={2} container>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Paper elevation={2} style={styles.Paper}>
           <Typography variant="h4">Add new recepient</Typography>
           <Grid container spacing={3} justifyContent="space-between">
@@ -134,7 +132,7 @@ export default () => {
                     error={!!errors.email}
                     label="First Name"
                     fullWidth
-                    autoComplete="email"
+                    autoComplete="first name"
                     variant="standard"
                     helperText={errors.first_name?.message}
                     {...field}
@@ -152,7 +150,7 @@ export default () => {
                     error={!!errors.email}
                     label="Last Name"
                     fullWidth
-                    autoComplete="email"
+                    autoComplete="last name"
                     variant="standard"
                     helperText={errors.last_name?.message}
                     {...field}
@@ -190,7 +188,7 @@ export default () => {
         </Paper>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={12} md={4}>
         <Typography mt={3} variant="h4">
           Recepients list
         </Typography>
@@ -201,8 +199,9 @@ export default () => {
           {recepients.map((recepient, id) => {
             return (
               <Grid
+                item
+                xs={12}
                 container
-                xs={10}
                 justifyContent="space-between"
                 justifyItems="center"
                 style={styles.RecepientItem}
