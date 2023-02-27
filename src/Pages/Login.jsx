@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import userState from "../State/userAtom.js";
+import Axios from "../State/Axios.js";
 
 function Copyright(props) {
   return (
@@ -37,7 +38,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userState);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -45,14 +46,29 @@ export default function SignIn() {
       password: data.get("password"),
     });
 
-    setUser({
-      isAutehnticated: true,
-      first_name: "John",
-      last_name: "John",
-      token: "asasa",
+    const response = await Axios.post("/login", {
+      email: data.get("email"),
+      password: data.get("password"),
     });
 
-    navigate("/admin");
+    if (response.status !== 200) {
+      alert("Wrong username or password. Please try again.");
+    } else {
+      const { first_name, last_name, token, email } = response.data;
+
+      localStorage.setItem("user", JSON.stringify(response.data));
+
+      setUser({
+        isAutehnticated: true,
+        first_name,
+        last_name,
+        email,
+        token,
+      });
+
+      navigate("/admin");
+    }
+    console.log(response);
   };
 
   return (

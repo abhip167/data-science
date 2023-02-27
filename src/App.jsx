@@ -5,11 +5,12 @@ import UserData from "./Pages/UserData.jsx";
 import Login from "./Pages/Login.jsx";
 import { red } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import ProtectedRoute from "./Routes/ProtectedRoute.jsx";
+import { AxiosInterceptor } from "./State/Axios.js";
 
 const theme = createTheme({
   palette: {
@@ -22,33 +23,37 @@ const theme = createTheme({
 
 function App() {
   return (
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <Navbar />
+    <AxiosInterceptor>
+      <RecoilRoot>
+        <React.StrictMode>
+          <ThemeProvider theme={theme}>
+            <Navbar />
 
-        <Routes>
-          <Route index element={<Checkout />} />
-          <Route path="login" element={<Login />} />
+            <Routes>
+              <Route index element={<Checkout />} />
+              <Route path="login" element={<Login />} />
 
-          <Route
-            path="admin"
-            element={
-              <ProtectedRoute>
-                <AdminPage />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="user-data"
-            element={
-              <ProtectedRoute>
-                <UserData />
-              </ProtectedRoute>
-            }
-          ></Route>
-        </Routes>
-      </ThemeProvider>
-    </RecoilRoot>
+              <Route
+                path="admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminPage />
+                  </ProtectedRoute>
+                }
+              ></Route>
+              <Route
+                path="user-data"
+                element={
+                  <ProtectedRoute>
+                    <UserData />
+                  </ProtectedRoute>
+                }
+              ></Route>
+            </Routes>
+          </ThemeProvider>
+        </React.StrictMode>
+      </RecoilRoot>
+    </AxiosInterceptor>
   );
 }
 

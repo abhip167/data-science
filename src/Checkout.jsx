@@ -139,7 +139,7 @@ export default () => {
               </Box>
             ) : (
               <Fragment>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" align="center" gutterBottom>
                   We appreciate your contribution.
                 </Typography>
                 <Typography variant="subtitle1">

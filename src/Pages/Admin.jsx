@@ -14,7 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import * as React from "react";
-import AxiosModule from "../State/Axios.js";
+import Axios from "../State/Axios.js";
 
 const SUCCESS_MESSAGE = "Receipient added successfully";
 const ERROR_MESSAGE = "Receipient already exists";
@@ -65,6 +65,13 @@ export default () => {
     resolver: yupResolver(schema),
   });
 
+  const fetchRecepients = async () => {
+    const response = await Axios.get("recepients");
+
+    console.log(response);
+    setRecepients(response.data.rows);
+  };
+
   React.useEffect(() => {
     fetchRecepients();
   }, []);
@@ -73,20 +80,13 @@ export default () => {
     setOpen(false);
   };
 
-  const fetchRecepients = async () => {
-    const response = await AxiosModule.get("http://localhost:3000/recepients");
-    const data = response.data;
-    setRecepients(data.rows);
-    console.log(data.rows);
-  };
-
   const addNewRecepients = async (data) => {
     console.log(data);
     const response = await fetch("http://localhost:3000/recepients", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-access-token": localStorage.getItem("token"),
+        "x-access-token": localStorage.getItem("user"),
       },
       body: JSON.stringify(data),
     });
@@ -108,7 +108,7 @@ export default () => {
     const response = await fetch(`http://localhost:3000/recepients/${id}`, {
       method: "DELETE",
       headers: {
-        "x-access-token": localStorage.getItem("token"),
+        "x-access-token": localStorage.getItem("user"),
       },
     });
 

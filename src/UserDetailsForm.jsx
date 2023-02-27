@@ -29,7 +29,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" align="center" gutterBottom>
         Data owner details
       </Typography>
       <Grid container spacing={3}>
