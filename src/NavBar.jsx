@@ -70,10 +70,13 @@ const ResponsiveAppBar = () => {
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
             className="carletonLogo"
           >
-            <img
-              src={Logo}
-              style={{ aspectRatio: "3059/466", width: "17rem" }}
-            ></img>
+            <a href="https://victorious-water-031e5b310.1.azurestaticapps.net/">
+              {" "}
+              <img
+                src={Logo}
+                style={{ aspectRatio: "3059/466", width: "17rem" }}
+              ></img>{" "}
+            </a>
           </Box>
 
           <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
