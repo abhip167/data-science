@@ -49,7 +49,7 @@ export default () => {
       body: JSON.stringify(defaultValues),
     };
     const response = await fetch(
-      "http://localhost:3000/details",
+      "https://datasciencebackend.azurewebsites.net/details",
       requestOptions
     );
     const data = await response.json();

@@ -46,7 +46,7 @@ export default () => {
   );
 
   const fetchRecepients = async () => {
-    const response = await AxiosModule.get("http://localhost:3000/details");
+    const response = await AxiosModule.get("details");
     const data = response.data;
     setRecepients(data.rows);
     console.log(data.rows);
