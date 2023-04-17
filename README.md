@@ -1,9 +1,11 @@
 # data-science
 Data Science Web Portal
 
-# Run it locally
+## Install dependencies
 npm install
+
+## Run it locally
 npm run dev
 
-# Build the web app to deploy
+## Build the web app to deploy
 npm run build
