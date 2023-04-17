@@ -20,9 +20,9 @@ const defaultValues = {
   name: "",
   organization: "",
   email: "",
-  phone: null,
-  description: null,
-  natureOfWork: null,
+  phone: undefined,
+  description: "",
+  natureOfWork: "",
   files: {},
 };
 
