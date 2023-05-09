@@ -10,6 +10,7 @@ specifiers:
   '@types/react-dom': ^18.0.6
   '@vitejs/plugin-react': ^2.0.0
   axios: ^1.3.2
+  export-to-csv: ^0.2.1
   jwt-decode: ^3.1.2
   material-react-table: ^1.6.6
   react: ^18.2.0
@@ -27,6 +28,7 @@ dependencies:
   '@mui/icons-material': 5.8.4_coxa3mmk7xdciqqsybg7vi3uaa
   '@mui/material': 5.10.0_sqzxty2p7kxc2tmue4tecplwku
   axios: 1.3.2
+  export-to-csv: 0.2.1
   jwt-decode: 3.1.2
   material-react-table: 1.6.6_d26t256nkgl7lavbyl6bbvn43m
   react: 18.2.0
@@ -1114,6 +1116,10 @@ packages:
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /export-to-csv/0.2.1:
+    resolution: {integrity: sha512-KTbrd3CAZ0cFceJEZr1e5uiMasabeCpXq1/5uvVxDl53o4jXJHnltasQoj2NkzrxD8hU9kdwjnMhoir/7nNx/A==}
     dev: false
 
   /find-root/1.1.0:
