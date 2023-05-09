@@ -29,7 +29,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" align="center" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
         Data owner details
       </Typography>
       <Grid container spacing={3}>
@@ -40,7 +40,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.name}
-                label="Name"
+                label="Name *"
                 fullWidth
                 autoComplete="name"
                 variant="standard"
@@ -57,7 +57,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.organization}
-                label="Organization"
+                label="Organization *"
                 fullWidth
                 autoComplete="organization"
                 variant="standard"
@@ -75,7 +75,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.email}
-                label="Email"
+                label="Email *"
                 fullWidth
                 autoComplete="email"
                 variant="standard"
@@ -92,7 +92,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.phone}
-                label="Phone"
+                label="Phone *"
                 fullWidth
                 autoComplete="phone"
                 variant="standard"

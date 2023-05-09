@@ -28,7 +28,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
 
   return (
     <Fragment>
-      <Typography variant="h6" align="center" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
         Data description
       </Typography>
       <Grid container spacing={3}>
@@ -39,7 +39,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.natureOfWork}
-                label="Nature of Work"
+                label="Nature of Work *"
                 fullWidth
                 autoComplete="work-type"
                 variant="standard"
@@ -58,7 +58,7 @@ export default ({ handleBack, onSubmit, defaultValues }) => {
             render={({ field }) => (
               <TextField
                 error={!!errors.description}
-                label="Description about data"
+                label="Description about data *"
                 fullWidth
                 autoComplete="description"
                 variant="standard"

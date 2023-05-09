@@ -13,8 +13,13 @@ import {
 
 import UserDetailsForm from "./UserDetailsForm.jsx";
 import DataDescription from "./DataDescription.jsx";
+import CollaborationForm from "./CollaborationForm.jsx";
 
-const steps = ["User Details", "Project & Data Description"];
+const steps = [
+  "User Details",
+  "Project & Data Description",
+  "Collaboration Details",
+];
 
 const defaultValues = {
   name: "",
@@ -24,6 +29,12 @@ const defaultValues = {
   description: "",
   natureOfWork: "",
   files: {},
+  collectionMethod: "",
+  format: "",
+  updateFrequency: "",
+  ethicsApproval: "",
+  collaboration: "",
+  financialSupport: "",
 };
 
 export default () => {
@@ -72,6 +83,15 @@ export default () => {
         defaultValues.natureOfWork = data.natureOfWork;
         defaultValues.description = data.description;
         break;
+      case 2:
+        defaultValues.collectionMethod = data.collectionMethod;
+        defaultValues.format = data.format;
+        defaultValues.updateFrequency = data.updateFrequency;
+        defaultValues.ethicsApproval = data.ethicsApproval;
+        defaultValues.collaboration = data.collaboration;
+        defaultValues.financialSupport = data.financialSupport;
+
+        break;
     }
 
     console.log({ defaultValues });
@@ -103,6 +123,10 @@ export default () => {
             defaultValues={defaultValues}
           />
         );
+      case 2:
+        return (
+          <CollaborationForm handleBack={handleBack} onSubmit={handleSubmit} />
+        );
       // case 2:
       //   return (
       //     <FileUploadForm handleBack={handleBack} onSubmit={handleSubmit} />
@@ -120,7 +144,7 @@ export default () => {
           Submit Data
         </Typography>
       </Box>
-      <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
@@ -134,12 +158,17 @@ export default () => {
           </Stepper>
           {activeStep === steps.length ? (
             isLoading ? (
-              <Box sx={{ display: "flex" }} justifyContent="center">
+              <Box sx={{ display: "flex", mt: 4 }} justifyContent="center">
                 <CircularProgress />
               </Box>
             ) : (
               <Fragment>
-                <Typography variant="h5" align="center" gutterBottom>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  gutterBottom
+                  sx={{ mt: 4 }}
+                >
                   We appreciate your contribution.
                 </Typography>
                 <Typography variant="subtitle1">
