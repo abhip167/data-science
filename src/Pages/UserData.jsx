@@ -44,22 +44,22 @@ const columns = [
     header: "Created At",
   },
   {
-    accessorKey: "collectionMethod",
+    accessorKey: "data_collection_method",
     header: " Collection Method",
     size: 200,
   },
   {
-    accessorKey: "format",
+    accessorKey: "data_format",
     header: "Data Fromat",
     size: 200,
   },
   {
-    accessorKey: "updateFrequency",
+    accessorKey: "data_update_frequency",
     header: "Data Update Frequency",
     size: 200,
   },
   {
-    accessorKey: "ethicsApproval",
+    accessorKey: "ethics_approval",
     header: "Ethics Approval",
     size: 200,
   },
@@ -69,7 +69,7 @@ const columns = [
     size: 200,
   },
   {
-    accessorKey: "financialSupport",
+    accessorKey: "financial_support",
     header: "Financial Support ",
     size: 200,
   },

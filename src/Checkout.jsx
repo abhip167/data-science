@@ -60,7 +60,7 @@ export default () => {
       body: JSON.stringify(defaultValues),
     };
     const response = await fetch(
-      "https://datasciencebackend.azurewebsites.net/details",
+      import.meta.env.VITE_API_URL + "details",
       requestOptions
     );
     const data = await response.json();
